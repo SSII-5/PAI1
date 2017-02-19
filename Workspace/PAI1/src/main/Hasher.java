@@ -14,7 +14,7 @@ public class Hasher {
 		setType(type);
 	}
 	
-	private String type;
+	private static String type;
 	
 
 	
@@ -24,11 +24,11 @@ public class Hasher {
 
 
 	public void setType(String type) {
-		this.type = type;
+		Hasher.type = type;
 	}
 
 
-	public String hashFile(String file){
+	public static String hashFile(String file){
 		String result = null;
 		
 		try {

@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class Reader {
 
-	public String[] ReadConf(){
+	private static String[] ReadConf(){
 		
 		String content = null;
 		try{
@@ -23,7 +23,7 @@ public class Reader {
 		return parts;
 	}
 	
-	public List<String> ReadFilesFromConf(){
+	public static List<String> ReadFilesFromConf(){
 		
 		List<String> res = new ArrayList<String>();
 		
@@ -40,13 +40,13 @@ public class Reader {
 		
 	}
 	
-	public String MethodFromConf(){
+	public static String MethodFromConf(){
 		
 		String res = ReadConf()[1];
 		return res;
 	}
 	
-	public Integer IntervalFromConf(){
+	public static Integer IntervalFromConf(){
 		
 		String str = ReadConf()[2];
 		Integer res = new Integer(str);
@@ -54,7 +54,7 @@ public class Reader {
 		return res;
 	}
 	
-	public String IncidenceFileFromConf(){
+	public static String IncidenceFileFromConf(){
 		
 		String res = ReadConf()[3];
 		return res;
