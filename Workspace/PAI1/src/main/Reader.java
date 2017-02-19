@@ -7,7 +7,9 @@ import java.util.Scanner;
 
 public class Reader {
 
-	public String[] ReadConf(){
+	
+	//Lee el fichero de configuración y saca varias Strings
+	public static String[] ReadConf(){
 		
 		String content = null;
 		try{
@@ -23,11 +25,13 @@ public class Reader {
 		return parts;
 	}
 	
-	public List<String> ReadFilesFromConf(){
+	
+	//extrae la lista de nombres de archivos del fichero de configuración.
+	public static List<String> ReadFilesFromConf(){
 		
 		List<String> res = new ArrayList<String>();
 		
-		String files = ReadConf()[0];
+		String files = ReadConf()[0].trim();
 		
 		String[] parts = files.split(",");
 		
@@ -40,23 +44,29 @@ public class Reader {
 		
 	}
 	
-	public String MethodFromConf(){
+	
+	//extrae el método de encriptación de la configuración
+	public static String ReadMethodFromConf(){
 		
-		String res = ReadConf()[1];
+		String res = ReadConf()[1].trim();
 		return res;
 	}
 	
-	public Integer IntervalFromConf(){
+	//extrae el intervalo en días de la configuración
+	public static Integer ReadIntervalFromConf(){
 		
-		String str = ReadConf()[2];
+		String str = ReadConf()[2].trim();
 		Integer res = new Integer(str);
 		
 		return res;
 	}
 	
-	public String IncidenceFileFromConf(){
+	
+	//extrae el nombre del archivo de incidendias de la configuración
+	public static String ReadIncidenceFileFromConf(){
 		
-		String res = ReadConf()[3];
+		String res = ReadConf()[3].trim();
 		return res;
 	}
+	
 }
