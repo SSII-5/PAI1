@@ -17,7 +17,7 @@ public class Reader {
 			System.out.println("Hubo un error leyendo el archivo de configuración. Compruebe el formato.");
 		}
 		
-		String[] parts = content.split("\n");
+		String[] parts = content.split(";");
 		
 		
 		return parts;
@@ -38,6 +38,25 @@ public class Reader {
 		
 		return res;
 		
+	}
+	
+	public String MethodFromConf(){
 		
+		String res = ReadConf()[1];
+		return res;
+	}
+	
+	public Integer IntervalFromConf(){
+		
+		String str = ReadConf()[2];
+		Integer res = new Integer(str);
+		
+		return res;
+	}
+	
+	public String IncidenceFileFromConf(){
+		
+		String res = ReadConf()[3];
+		return res;
 	}
 }
