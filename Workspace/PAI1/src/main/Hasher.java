@@ -9,23 +9,9 @@ import java.security.NoSuchAlgorithmException;
 public class Hasher {
 	
 	
-	public Hasher(String type){
-		super();
-		setType(type);
-	}
-	
-	private static String type;
-	
 
 	
-	public String getType() {
-		return type;
-	}
-
-
-	public void setType(String type) {
-		Hasher.type = type;
-	}
+	public static String type;
 
 
 	public static String hashFile(String file){
@@ -58,7 +44,7 @@ public class Hasher {
 		} catch (IOException e) {
 			System.out.println("El sistema no ha podido acceder al archivo: "+ file);
 		}
-		return result;
+		return file + ": " + result;
 	     
 	}
 	
