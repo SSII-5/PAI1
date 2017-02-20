@@ -17,24 +17,6 @@ import javax.crypto.SecretKey;
 
 public class Output {
 	
-	//TODO Hallar una mejor forma de guardar la clave que en un static. O asignarle el mismo valor siempre. Es AES-128, tiene suficiente seguridad en principio
-	private static SecretKey key;
-	
-
-	
-	
-	
-	// Se crea la clave de encriptación de los archivos.
-	private void obtainKey() throws NoSuchAlgorithmException{
-		
-		
-		KeyGenerator keyGen = KeyGenerator.getInstance("AES");
-		keyGen.init(256); 
-		SecretKey secretKey = keyGen.generateKey();
-		
-		
-		Output.key = secretKey;
-	}
 	
 	
 	
