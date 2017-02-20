@@ -52,7 +52,7 @@ public class CryptoUtils {
         } catch (NoSuchPaddingException | NoSuchAlgorithmException
                 | InvalidKeyException | BadPaddingException
                 | IllegalBlockSizeException | IOException ex) {
-            throw new Exception("Error encrypting/decrypting file", ex);
+			FileGenerator.createError(ex.getMessage());
         }
     }
     

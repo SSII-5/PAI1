@@ -16,7 +16,7 @@ public class Reader {
 			content = new Scanner(new File("./configuration.txt")).useDelimiter("\\Z").next();
 		}catch(IOException e){
 			
-			System.out.println("Hubo un error leyendo el archivo de configuración. Compruebe el formato.");
+			FileGenerator.createError(e.getMessage());
 		}
 		
 		String[] parts = content.split(";");

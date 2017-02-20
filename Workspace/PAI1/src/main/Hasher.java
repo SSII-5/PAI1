@@ -40,9 +40,9 @@ public class Hasher {
 		     result = Converter.byteArrayToHexString(hash);
 		     return result;
 		} catch (NoSuchAlgorithmException e) {
-			System.out.println("Este algoritmo no está soportado por el sistema, por favor, pruebe con otro distinto.");
+			FileGenerator.createError(e.getMessage());
 		} catch (IOException e) {
-			System.out.println("El sistema no ha podido acceder al archivo: "+ file);
+			FileGenerator.createError(e.getMessage());
 		}
 		return file + ": " + result;
 	     

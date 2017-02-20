@@ -31,7 +31,8 @@ public class FileGenerator {
 		Hasher.type = Reader.ReadMethodFromConf();
 		// Los hashea
 		for (String file: files){
-			String hash = Hasher.hashFile(file);
+			Path filepath = Paths.get(executionPath ,file);
+			String hash = Hasher.hashFile(filepath.toString());
 			hashes.add(hash);
 		}
 		
@@ -60,7 +61,7 @@ public class FileGenerator {
 			hashes = Files.lines(path).collect(Collectors.toList());
 			
 		} catch (Exception e) {
-			System.out.println("No se pudo desencriptar el archivo");
+			createError(e.getMessage());
 		}
 		return hashes;
 		
@@ -74,10 +75,10 @@ public class FileGenerator {
 			Files.write(path, hashes, Charset.forName("UTF-8"));
 			CryptoUtils.encrypt(CryptoUtils.getKey().toString(), result, result);
 		} catch (IOException e) {
-			System.out.println("No se pudo escribir el archivo");
+			createError(e.getMessage());
 		}
 		 catch (Exception e) {
-			System.out.println("No se ha podido encriptar el archivo");
+				createError(e.getMessage());
 		}
 		return result;
 	}
@@ -105,7 +106,7 @@ public class FileGenerator {
 		try {
 			Files.write(file, lines, Charset.forName("UTF-8"),StandardOpenOption.APPEND);
 		} catch (IOException e) {
-			e.printStackTrace();
+			createError(e.getMessage());
 		}
 		
 	}
@@ -155,7 +156,7 @@ public class FileGenerator {
 				result = "d".charAt(0);
 			
 		} catch (IOException e) {
-			e.printStackTrace();
+			createError(e.getMessage());
 		}
 		
 		return result;
@@ -190,13 +191,46 @@ public class FileGenerator {
 			Files.write(file, lines, Charset.forName("UTF-8"));
 		} catch (IOException e) {
 			
-			e.printStackTrace(); //TODO Meter generador de errores
+			createError(e.getMessage());
 		}
 		
 		
 	}
 	
-	public void setExecutionPath(){
+	public static void createError(String error){
+		
+		List<String> lines = new ArrayList<String>();
+		Calendar moment;
+		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat formatter2 = new SimpleDateFormat("hh:mm");
+		String date;
+		String time;
+		
+		moment = Calendar.getInstance();
+		date = formatter.format(moment);
+		time = formatter2.format(moment);
+		
+		String filename = "errors.txt";
+		String executionPath = System.getProperty("user.dir");
+		Path file = Paths.get(executionPath, filename);
+		
+		try {
+			lines = Files.lines(file).collect(Collectors.toList());
+		} catch (IOException e) {
+			lines.add("Día 				Hora				Fichero no Íntegro");
+		}
+			lines.add(date + "			|	" + time + "			|	" + error); 
+		
+		try {
+			Files.write(file, lines, Charset.forName("UTF-8"));
+		} catch (IOException e) {
+			createError(e.getMessage());
+		}
+		
+		
+	}
+	
+	public static void setExecutionPath(){
 		FileGenerator.executionPath = System.getProperty("user.dir");
 	}
 }
