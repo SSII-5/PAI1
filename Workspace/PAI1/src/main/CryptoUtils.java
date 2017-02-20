@@ -52,13 +52,13 @@ public class CryptoUtils {
         } catch (NoSuchPaddingException | NoSuchAlgorithmException
                 | InvalidKeyException | BadPaddingException
                 | IllegalBlockSizeException | IOException ex) {
-			FileGenerator.createError(ex.getMessage());
+            throw new Exception("Error encrypting/decrypting file", ex);
         }
     }
     
   	
   	// Se crea la clave de encriptación de los archivos.
-  	public void obtainKey() throws NoSuchAlgorithmException{
+  	public static void obtainKey() throws NoSuchAlgorithmException{
   		
   		
   		KeyGenerator keyGen = KeyGenerator.getInstance("AES");
