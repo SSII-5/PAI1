@@ -5,7 +5,9 @@ import java.util.TimerTask;
 public class RunTimer extends TimerTask{
 	
 	public void run() {
-	
+		
+		//Lee el fichero de configuracion
+		Reader.ReadConf();	
 		
 	}
 
