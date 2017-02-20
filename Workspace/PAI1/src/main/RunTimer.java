@@ -1,5 +1,6 @@
 package main;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -12,7 +13,12 @@ public class RunTimer extends TimerTask{
 		Reader.ReadConf();
 		
 		//crea la clave de los archivos al ejecutar el programa por primera vez
-		CryptoUtils.obtainKey();
+		try {
+			CryptoUtils.obtainKey();
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		FileGenerator.setExecutionPath();
@@ -21,7 +27,7 @@ public class RunTimer extends TimerTask{
 		Date primeraVez = new Date(System.currentTimeMillis());
 		Timer informe = new Timer();
 		long tiempoEntreEjecuciones = 86400000 * Reader.ReadIntervalFromConf(); 
-		informe.schedule(task, primeraVez, tiempoEntreEjecuciones);
+		//informe.schedule(task, primeraVez, tiempoEntreEjecuciones);
 		
 	}
 
