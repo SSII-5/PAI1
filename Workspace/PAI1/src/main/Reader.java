@@ -34,10 +34,11 @@ public class Reader {
 		String files = ReadConf()[0].trim();
 		
 		String[] parts = files.split(",");
+		String part;
 		
 		for(int i=0;i<parts.length;i++){
-			
-			res.add(parts[i]);
+			part = parts[i].trim();
+			res.add(part);
 		}
 		
 		return res;

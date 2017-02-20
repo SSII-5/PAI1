@@ -88,7 +88,7 @@ public class FileGenerator {
 	private static void generateIndicators(List<String> hashes, List<String> oldHashes){
 		
 		String results = "";
-		Calendar time;
+		Date time;
 		Double ratio;
 		SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
 		List<String> lines = new ArrayList<String>();
@@ -99,7 +99,7 @@ public class FileGenerator {
 			lines.add("Día				Ratio					Tendencia");
 		}
 		
-		time = Calendar.getInstance();
+		time = new Date();
 		ratio = compareHashings(hashes, oldHashes);
 		results = format.format(time)+ "			|	" + ratio.toString() + "				|	" + getTendency(ratio).toString();
 		lines.add(results);
@@ -120,16 +120,18 @@ public class FileGenerator {
 	
 		failed.addAll(hashes);
 		tester.addAll(hashes);
-		if (!oldHashes.isEmpty()){
-			tester.retainAll(oldHashes);
-			failed.removeAll(tester);
-			if(tester.size() == oldHashes.size()){
-				success = true;
-			}else{
-				success = false;
-			}
-			if (!success){
-				createIncidence(failed);
+		if(oldHashes != null){
+			if (!oldHashes.isEmpty()){
+				tester.retainAll(oldHashes);
+				failed.removeAll(tester);
+				if(tester.size() == oldHashes.size()){
+					success = true;
+				}else{
+					success = false;
+				}
+				if (!success){
+					createIncidence(failed);
+				}
 			}
 		}
 		result = new Double(tester.size()/hashes.size());
@@ -200,13 +202,13 @@ public class FileGenerator {
 	public static void createError(String error){
 		
 		List<String> lines = new ArrayList<String>();
-		Calendar moment;
+		Date moment;
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		SimpleDateFormat formatter2 = new SimpleDateFormat("hh:mm");
 		String date;
 		String time;
 		
-		moment = Calendar.getInstance();
+		moment = new Date();
 		date = formatter.format(moment);
 		time = formatter2.format(moment);
 		
@@ -217,7 +219,7 @@ public class FileGenerator {
 		try {
 			lines = Files.lines(file).collect(Collectors.toList());
 		} catch (IOException e) {
-			lines.add("Día 				Hora				Fichero no Íntegro");
+			lines.add("Día 				Hora				Tipo de error");
 		}
 			lines.add(date + "			|	" + time + "			|	" + error); 
 		

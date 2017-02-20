@@ -1,0 +1,22 @@
+Día 				Hora				Fichero no Íntegro
+20-02-2017			|	07:46			|	null\file1.txt (El sistema no puede encontrar la ruta especificada)
+20-02-2017			|	07:46			|	null\ file2.txt (El sistema no puede encontrar la ruta especificada)
+20-02-2017			|	07:46			|	null\ file3.txt (El sistema no puede encontrar la ruta especificada)
+20-02-2017			|	07:46			|	null\ file4.txt (El sistema no puede encontrar la ruta especificada)
+20-02-2017			|	07:46			|	null\ file5.txt (El sistema no puede encontrar la ruta especificada)
+20-02-2017			|	07:48			|	null\file1.txt (El sistema no puede encontrar la ruta especificada)
+20-02-2017			|	07:48			|	null\ file2.txt (El sistema no puede encontrar la ruta especificada)
+20-02-2017			|	07:48			|	null\ file3.txt (El sistema no puede encontrar la ruta especificada)
+20-02-2017			|	07:48			|	null\ file4.txt (El sistema no puede encontrar la ruta especificada)
+20-02-2017			|	07:48			|	null\ file5.txt (El sistema no puede encontrar la ruta especificada)
+20-02-2017			|	07:48			|	null\file1.txt (El sistema no puede encontrar la ruta especificada)
+20-02-2017			|	07:48			|	null\ file2.txt (El sistema no puede encontrar la ruta especificada)
+20-02-2017			|	07:48			|	null\ file3.txt (El sistema no puede encontrar la ruta especificada)
+20-02-2017			|	07:48			|	null\ file4.txt (El sistema no puede encontrar la ruta especificada)
+20-02-2017			|	07:48			|	null\ file5.txt (El sistema no puede encontrar la ruta especificada)
+20-02-2017			|	07:48			|	null\indicadores.txt
+20-02-2017			|	07:48			|	null\indicadores.txt
+20-02-2017			|	07:48			|	null\SecureHashes.txt
+20-02-2017			|	07:53			|	C:\Users\Alber\Desktop\SSII\Repo\PAI1\Workspace\PAI1\indicadores.txt
+20-02-2017			|	07:53			|	C:\Users\Alber\Desktop\SSII\Repo\PAI1\Workspace\PAI1\indicadores.txt
+20-02-2017			|	07:53			|	Error encrypting/decrypting file

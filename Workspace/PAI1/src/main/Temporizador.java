@@ -1,5 +1,6 @@
 package main;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.Timer;
 
@@ -8,6 +9,14 @@ public class Temporizador {
 public static void main (String[] args) {
 		
 		Date runTime = new Date(System.currentTimeMillis());
+		
+		FileGenerator.setExecutionPath();
+		try {
+			CryptoUtils.obtainKey();
+		} catch (NoSuchAlgorithmException e) {
+			FileGenerator.createError(e.getMessage());
+		}
+		
 		
 		// ahora cogemos el tiempo del intervalo (en milisegundos)
 		Integer tiempoRepeticion = 86400000 * Reader.ReadIntervalFromConf(); 
