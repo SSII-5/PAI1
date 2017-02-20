@@ -29,7 +29,7 @@ public class Output {
 		
 		// Obtiene la lista de archivos del lector de configuración
 		files = Reader.ReadFilesFromConf();
-		Hasher.type = Reader.MethodFromConf();
+		Hasher.type = Reader.ReadMethodFromConf();
 		// Los hashea
 		for (String file: files){
 			String hash = Hasher.hashFile(file);
@@ -49,7 +49,7 @@ public class Output {
 		
 		result = writeEncryptedHashes(path, hashes);
 		
-		return file1;
+		return result;
 	}
 	
 	//Lee el archivo encriptado otro día. 
