@@ -20,11 +20,11 @@ public class FileGenerator {
 	public static int days = 0;
 	public static String executionPath;
 	
-	private File hashedFiles(){
+	public static File hashedFiles(){
 		File result;
 		List<String> files;
 		List<String> hashes = new ArrayList<String>();
-		List<String> oldHashes;
+		List<String> oldHashes = null;
 		
 		// Obtiene la lista de archivos del lector de configuración
 		files = Reader.ReadFilesFromConf();
@@ -43,7 +43,7 @@ public class FileGenerator {
 			oldHashes = readEncryptedHashes(path);
 		}
 		
-		//TODO Aquí hay que meter el método que te genera los informes, todos ellos.
+		generateIndicators(hashes, oldHashes);
 		
 		
 		result = writeEncryptedHashes(path, hashes);
@@ -52,7 +52,7 @@ public class FileGenerator {
 	}
 	
 	//Lee el archivo encriptado otro día. 
-	private List<String> readEncryptedHashes(Path path){
+	private static List<String> readEncryptedHashes(Path path){
 		File file = path.toFile();
 		List<String> hashes = null;
 		try {
@@ -67,7 +67,7 @@ public class FileGenerator {
 	}
 	
 	//Encripta los hashings
-	private File writeEncryptedHashes(Path path, List<String> hashes){
+	private static File writeEncryptedHashes(Path path, List<String> hashes){
 		File result = new File(path.toString());
 		
 		try {
@@ -84,7 +84,7 @@ public class FileGenerator {
 	
 	
 	//Este método es el principal para generar los archivos, pero se tienen que hacer más métodos, porque hay que modularizar o nos vamos a la puta
-	private void generateIndicators(List<String> hashes, List<String> oldHashes){
+	private static void generateIndicators(List<String> hashes, List<String> oldHashes){
 		
 		String results = "";
 		Calendar time;
@@ -111,31 +111,32 @@ public class FileGenerator {
 	}
 	
 	//Tratamiento de las dos listas de Hashing para sacar indicadores
-	private Double compareHashings(List<String> hashes, List<String> oldHashes){
+	private static Double compareHashings(List<String> hashes, List<String> oldHashes){
 		Double result;
 		boolean success;
 		List<String> tester = new ArrayList<String>();
 		List<String> failed = new ArrayList<String>();
 	
-		failed.addAll(oldHashes);
-		tester.addAll(oldHashes);
-		tester.retainAll(hashes);
-		failed.removeAll(tester);
-		
-		if(tester.size() == hashes.size()){
-			success = true;
-		}else{
-			success = false;
-		}
-		if (!success){
-			createIncidence(failed);
+		failed.addAll(hashes);
+		tester.addAll(hashes);
+		if (!oldHashes.isEmpty()){
+			tester.retainAll(oldHashes);
+			failed.removeAll(tester);
+			if(tester.size() == oldHashes.size()){
+				success = true;
+			}else{
+				success = false;
+			}
+			if (!success){
+				createIncidence(failed);
+			}
 		}
 		result = new Double(tester.size()/hashes.size());
 		
 		return result;
 	}
 	
-	private Character getTendency(Double ratio){
+	private static Character getTendency(Double ratio){
 		Path file = Paths.get(executionPath, "indicadores.txt");
 		String lastLine;
 		char result = "e".charAt(0);
@@ -160,7 +161,7 @@ public class FileGenerator {
 		return result;
 	}
 	
-	private void createIncidence(List<String> missing){
+	private static void createIncidence(List<String> missing){
 		
 		List<String> lines = new ArrayList<String>();
 		Calendar moment;
@@ -182,12 +183,14 @@ public class FileGenerator {
 		} catch (IOException e) {
 			lines.add("Día 				Hora				Fichero no Íntegro");
 		}
-		
+		for(String hash: missing){
+			lines.add(date + "			|	" + time + "			|	" + hash.split(":")[0].trim()); //Coge solo el nombre del archivo
+		}
 		try {
-			Files.write(file, lines, Charset.forName("UTF-8"),StandardOpenOption.APPEND);
+			Files.write(file, lines, Charset.forName("UTF-8"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+			e.printStackTrace(); //TODO Meter generador de errores
 		}
 		
 		
