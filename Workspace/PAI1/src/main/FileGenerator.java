@@ -196,7 +196,7 @@ public class FileGenerator {
 		
 	}
 	
-	public void setExecutionPath(){
+	public static void setExecutionPath(){
 		FileGenerator.executionPath = System.getProperty("user.dir");
 	}
 }

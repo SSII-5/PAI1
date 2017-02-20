@@ -58,7 +58,7 @@ public class CryptoUtils {
     
   	
   	// Se crea la clave de encriptación de los archivos.
-  	public void obtainKey() throws NoSuchAlgorithmException{
+  	public static void obtainKey() throws NoSuchAlgorithmException{
   		
   		
   		KeyGenerator keyGen = KeyGenerator.getInstance("AES");

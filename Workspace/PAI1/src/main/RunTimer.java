@@ -11,6 +11,12 @@ public class RunTimer extends TimerTask{
 		//Lee el fichero de configuracion
 		Reader.ReadConf();
 		
+		//crea la clave de los archivos al ejecutar el programa por primera vez
+		CryptoUtils.obtainKey();
+		
+		
+		FileGenerator.setExecutionPath();
+		
 		//cada 30 dias de ejecucion del programa, hace llamada al metodo generateInform (esa llamada se pone donde "task")
 		Date primeraVez = new Date(System.currentTimeMillis());
 		Timer informe = new Timer();
