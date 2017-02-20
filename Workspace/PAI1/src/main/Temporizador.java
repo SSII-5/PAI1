@@ -12,6 +12,8 @@ public static void main (String[] args) {
 		// ahora cogemos el tiempo del intervalo (en milisegundos)
 		Integer tiempoRepeticion = 86400000 * Reader.ReadIntervalFromConf(); 
 		
+		FileGenerator.hashedFiles();
+		
 		// Programamos el temporizador para que el programa se ejecute cada dia que toque 
 		Timer temporizador = new Timer();
 		temporizador.schedule(new RunTimer(), runTime, (long) tiempoRepeticion);
