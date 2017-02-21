@@ -39,10 +39,8 @@ public class FileGenerator {
 		//Busca/Designa el path abstracto para el archivo de los hashes independientemente del SO.
 		Path path = Paths.get(executionPath, "SecureHashes.txt");
 		//Ahora tiene que hacer dos cosas. Comprobar si ese archivo tiene cosas y después encriptar nuestros hashes.
-		//La clave se va a suponer que siempre es la misma, puesto que el sistema va a tener una sola ejecución, aún así, hay formas de guardar la key mejor
-		if (days != 0){
-			oldHashes = readEncryptedHashes(path);
-		}
+		oldHashes = readEncryptedHashes(path);
+
 		
 		generateIndicators(hashes, oldHashes);
 		
@@ -57,7 +55,7 @@ public class FileGenerator {
 		File file = path.toFile();
 		List<String> hashes = null;
 		try {
-			CryptoUtils.decrypt(CryptoUtils.getKey().toString(), file, file);
+			CryptoUtils.decrypt(file, file);
 			hashes = Files.lines(path).collect(Collectors.toList());
 			
 		} catch (Exception e) {
@@ -73,7 +71,7 @@ public class FileGenerator {
 		
 		try {
 			Files.write(path, hashes, Charset.forName("UTF-8"));
-			CryptoUtils.encrypt(CryptoUtils.getKey().toString(), result, result);
+			CryptoUtils.encrypt(result, result);
 		} catch (IOException e) {
 			createError(e.getMessage());
 		}
@@ -95,16 +93,18 @@ public class FileGenerator {
 		Path file = Paths.get(executionPath, "indicadores.txt");
 		
 		// Si es el primer día de ejecución, introduce las cabeceras
-		if (days == 0){
-			lines.add("Día				Ratio					Tendencia");
+		try {
+			lines = Files.lines(file).collect(Collectors.toList());
+		} catch (IOException e) {
+			lines.add("Día				Ratio				Tendencia");
 		}
 		
 		time = new Date();
 		ratio = compareHashings(hashes, oldHashes);
-		results = format.format(time)+ "			|	" + ratio.toString() + "				|	" + getTendency(ratio).toString();
+		results = format.format(time)+ "			|	" + ratio.toString() + "			|	" + getTendency(ratio).toString();
 		lines.add(results);
 		try {
-			Files.write(file, lines, Charset.forName("UTF-8"),StandardOpenOption.APPEND);
+			Files.write(file, lines, Charset.forName("UTF-8"));
 		} catch (IOException e) {
 			createError(e.getMessage());
 		}
@@ -134,7 +134,7 @@ public class FileGenerator {
 				}
 			}
 		}
-		result = new Double(tester.size()/hashes.size());
+		result = new Double((long)tester.size()/(long)hashes.size());
 		
 		return result;
 	}

@@ -18,24 +18,22 @@ import javax.crypto.spec.SecretKeySpec;
  
 
 public class CryptoUtils {
-    private static final String ALGORITHM = "AES";
     private static final String TRANSFORMATION = "AES";
     private static SecretKey key;
  
-    public static void encrypt(String key, File inputFile, File outputFile) throws Exception {
-        doCrypto(Cipher.ENCRYPT_MODE, key, inputFile, outputFile);
+    public static void encrypt(File inputFile, File outputFile) throws Exception {
+        doCrypto(Cipher.ENCRYPT_MODE, inputFile, outputFile);
     }
  
-    public static void decrypt(String key, File inputFile, File outputFile) throws Exception{
-        doCrypto(Cipher.DECRYPT_MODE, key, inputFile, outputFile);
+    public static void decrypt(File inputFile, File outputFile) throws Exception{
+        doCrypto(Cipher.DECRYPT_MODE, inputFile, outputFile);
     }
  
-    private static void doCrypto(int cipherMode, String key, File inputFile,
+    private static void doCrypto(int cipherMode,  File inputFile,
             File outputFile) throws Exception  {
         try {
-            Key secretKey = new SecretKeySpec(key.getBytes(), ALGORITHM);
-            Cipher cipher = Cipher.getInstance(TRANSFORMATION);
-            cipher.init(cipherMode, secretKey);
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            cipher.init(cipherMode, CryptoUtils.key);
              
             FileInputStream inputStream = new FileInputStream(inputFile);
             byte[] inputBytes = new byte[(int) inputFile.length()];
@@ -62,7 +60,7 @@ public class CryptoUtils {
   		
   		
   		KeyGenerator keyGen = KeyGenerator.getInstance("AES");
-  		keyGen.init(256); 
+  		keyGen.init(128);
   		SecretKey secretKey = keyGen.generateKey();
   		
   		
