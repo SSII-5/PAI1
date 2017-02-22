@@ -1,4 +1,3 @@
 Día 				Hora				Tipo de error
-21-02-2017			|	05:21			|	Error encrypting/decrypting file
-21-02-2017			|	05:21			|	C:\Users\Alber\Desktop\SSII\Repo\PAI1\Workspace\PAI1\indicadores.txt
-21-02-2017			|	05:21			|	Error encrypting/decrypting file
+22-02-2017			|	07:57			|	null
+22-02-2017			|	07:57			|	C:\Users\Alber\Desktop\SSII\Repo\PAI1\Workspace\PAI1\indicadores.txt

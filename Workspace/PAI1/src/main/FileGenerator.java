@@ -19,8 +19,9 @@ public class FileGenerator {
 	
 	public static int days = 0;
 	public static String executionPath;
+	public static String hashHash;
 	
-	public static File hashedFiles(){
+	public static void hashedFiles(){
 		File result;
 		List<String> files;
 		List<String> hashes = new ArrayList<String>();
@@ -31,23 +32,31 @@ public class FileGenerator {
 		Hasher.type = Reader.ReadMethodFromConf();
 		// Los hashea
 		for (String file: files){
-			Path filepath = Paths.get(executionPath ,file);
-			String hash = Hasher.hashFile(filepath.toString());
+			String hash = Hasher.hashFile(file);
 			hashes.add(hash);
 		}
 		
 		//Busca/Designa el path abstracto para el archivo de los hashes independientemente del SO.
 		Path path = Paths.get(executionPath, "SecureHashes.txt");
 		//Ahora tiene que hacer dos cosas. Comprobar si ese archivo tiene cosas y después encriptar nuestros hashes.
-		oldHashes = readEncryptedHashes(path);
+//		try {
+//			oldHashes = Files.lines(path).collect(Collectors.toList());
+//		} catch (IOException e) {
+//			
+//		}
 
+		oldHashes = FileGenerator.readEncryptedHashes(path);
 		
 		generateIndicators(hashes, oldHashes);
 		
+		FileGenerator.writeEncryptedHashes(path, hashes);
 		
-		result = writeEncryptedHashes(path, hashes);
+//		try {
+//			Files.write(path, hashes, Charset.forName("UTF-8"));
+//		} catch (IOException e) {
+//			createError(e.getMessage());
+//		}
 		
-		return result;
 	}
 	
 	//Lee el archivo encriptado otro día. 
@@ -68,10 +77,9 @@ public class FileGenerator {
 	//Encripta los hashings
 	private static File writeEncryptedHashes(Path path, List<String> hashes){
 		File result = new File(path.toString());
-		
 		try {
 			Files.write(path, hashes, Charset.forName("UTF-8"));
-			CryptoUtils.encrypt(result, result);
+			CryptoUtils.encrypt(result,result);
 		} catch (IOException e) {
 			createError(e.getMessage());
 		}
@@ -117,13 +125,18 @@ public class FileGenerator {
 		boolean success;
 		List<String> tester = new ArrayList<String>();
 		List<String> failed = new ArrayList<String>();
+		Double tsize ;
+		Double hsize = new Double(hashes.size());
 	
 		failed.addAll(hashes);
 		tester.addAll(hashes);
+		tsize = new Double(tester.size());
+		
 		if(oldHashes != null){
 			if (!oldHashes.isEmpty()){
 				tester.retainAll(oldHashes);
 				failed.removeAll(tester);
+				tsize = new Double(tester.size());
 				if(tester.size() == oldHashes.size()){
 					success = true;
 				}else{
@@ -134,7 +147,7 @@ public class FileGenerator {
 				}
 			}
 		}
-		result = new Double((long)tester.size()/(long)hashes.size());
+		result = new Double(tsize/hsize);
 		
 		return result;
 	}
@@ -142,20 +155,21 @@ public class FileGenerator {
 	private static Character getTendency(Double ratio){
 		Path file = Paths.get(executionPath, "indicadores.txt");
 		String lastLine;
-		char result = "e".charAt(0);
+		char result = "=".charAt(0);
 		
 		
 		try {
 			List<String> lines = Files.lines(file).collect(Collectors.toList());
 			lastLine = lines.get(lines.size()-1);
-			String[] params = lastLine.split("|");
+			String[] params = lastLine.split("\\|");
 			Double prevRat = new Double(params[1].trim());
 			if (prevRat < ratio) {
-				result = "u".charAt(0);
+				result = "+".charAt(0);
 			}else if(prevRat == ratio){
-				result = "e".charAt(0);
-			}else
-				result = "d".charAt(0);
+				result = "=".charAt(0);
+			}else if(prevRat > ratio){
+				result = "-".charAt(0);
+			}
 			
 		} catch (IOException e) {
 			createError(e.getMessage());
@@ -167,13 +181,13 @@ public class FileGenerator {
 	private static void createIncidence(List<String> missing){
 		
 		List<String> lines = new ArrayList<String>();
-		Calendar moment;
+		Date moment;
 		SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		SimpleDateFormat formatter2 = new SimpleDateFormat("hh:mm");
 		String date;
 		String time;
 		
-		moment = Calendar.getInstance();
+		moment = new Date();
 		date = formatter.format(moment);
 		time = formatter2.format(moment);
 		

@@ -3,6 +3,8 @@ package main;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -15,10 +17,11 @@ public class Hasher {
 
 
 	public static String hashFile(String file){
-		String result = null;
-		
+		String hashed = null;
+		String result;
+		Path filepath = Paths.get(FileGenerator.executionPath ,file);
 		try {
-			InputStream fis =  new FileInputStream(file);
+			InputStream fis =  new FileInputStream(filepath.toFile());
 
 		    byte[] buffer = new byte[8192];
 		    MessageDigest complete;
@@ -37,14 +40,14 @@ public class Hasher {
 		      } while (numRead != -1);
 		     fis.close();
 		     hash = complete.digest();
-		     result = Converter.byteArrayToHexString(hash);
-		     return result;
+		     hashed = Converter.byteArrayToHexString(hash);
 		} catch (NoSuchAlgorithmException e) {
 			FileGenerator.createError(e.getMessage());
 		} catch (IOException e) {
 			FileGenerator.createError(e.getMessage());
 		}
-		return file + ": " + result;
+		result = file + ": " + hashed;
+		return result;
 	     
 	}
 	
