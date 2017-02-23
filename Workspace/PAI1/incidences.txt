@@ -1,2 +1,0 @@
-Día 				Hora				Fichero no Íntegro
-22-02-2017			|	07:57			|	file1.txt

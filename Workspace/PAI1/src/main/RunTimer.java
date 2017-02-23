@@ -1,7 +1,5 @@
 package main;
 
-import java.util.Date;
-import java.util.Timer;
 import java.util.TimerTask;
 
 public class RunTimer extends TimerTask{

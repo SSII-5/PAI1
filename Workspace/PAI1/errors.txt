@@ -1,3 +1,0 @@
-Día 				Hora				Tipo de error
-22-02-2017			|	07:57			|	null
-22-02-2017			|	07:57			|	C:\Users\Alber\Desktop\SSII\Repo\PAI1\Workspace\PAI1\indicadores.txt

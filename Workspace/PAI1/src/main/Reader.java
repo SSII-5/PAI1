@@ -1,6 +1,7 @@
 package main;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -9,6 +10,7 @@ public class Reader {
 
 	
 	//Lee el fichero de configuración y saca varias Strings
+	@SuppressWarnings("resource")
 	public static String[] ReadConf(){
 		
 		String content = null;

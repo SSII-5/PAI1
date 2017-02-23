@@ -6,10 +6,8 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,7 +20,6 @@ public class FileGenerator {
 	public static String hashHash;
 	
 	public static void hashedFiles(){
-		File result;
 		List<String> files;
 		List<String> hashes = new ArrayList<String>();
 		List<String> oldHashes = null;
@@ -39,11 +36,6 @@ public class FileGenerator {
 		//Busca/Designa el path abstracto para el archivo de los hashes independientemente del SO.
 		Path path = Paths.get(executionPath, "SecureHashes.txt");
 		//Ahora tiene que hacer dos cosas. Comprobar si ese archivo tiene cosas y después encriptar nuestros hashes.
-//		try {
-//			oldHashes = Files.lines(path).collect(Collectors.toList());
-//		} catch (IOException e) {
-//			
-//		}
 
 		oldHashes = FileGenerator.readEncryptedHashes(path);
 		
@@ -51,11 +43,6 @@ public class FileGenerator {
 		
 		FileGenerator.writeEncryptedHashes(path, hashes);
 		
-//		try {
-//			Files.write(path, hashes, Charset.forName("UTF-8"));
-//		} catch (IOException e) {
-//			createError(e.getMessage());
-//		}
 		
 	}
 	
